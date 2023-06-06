@@ -6,7 +6,7 @@ nav_order: 6
 
 # Adding SSO to a Dockerized Next.js Application
 
-We will now cover the process of adding single sign-on to a Dockerized Next.js application. 
+We will now cover the process of adding single sign-on to a dockerized Next.js application. 
 
 ### Install identity and MUI packages
 The azure identity related `npm` packages must be installed in the project to enable user authentication. We will also make use of the Material UI (MUI) library for styling and components. 
