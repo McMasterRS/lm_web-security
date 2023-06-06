@@ -1,8 +1,8 @@
-title: RSD Workshop Title # *** Enter workshop title here
-github_repo_url: "" # ***Enter workshop URL (in github pages) here
-gh_edit_repository: "" #*** ENTER the github URL for your repo
+title: Adding Single Sign-On to a Next.js/MUI Single-Page Application # *** Enter workshop title here
+github_repo_url: "https://mcmasterrs.github.io/sso-tutorial" # ***Enter workshop URL (in github pages) here
+gh_edit_repository: "https://github.com/McMasterRS/sso-tutorial" #*** ENTER the github URL for your repo
 
-subtitle: "Research Software Development Workshop Subtitle"
+subtitle: "Research Software Development Workshop - Single Sign-On Tutorial"
 favicon_ico: "https://raw.githubusercontent.com/McMasterRS/workshop-template/main/assets/img/favicon.ico"
 nav_footer_logo_bottom: "https://raw.githubusercontent.com/McMasterRS/workshop-template/main/assets/img/logo.png"
 nav_footer_logo_bottom_href: "https://research.mcmaster.ca/home/support-for-researchers/research-resources/research-software-development/"
