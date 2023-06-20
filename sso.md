@@ -1,10 +1,15 @@
 ---
 layout: default
 title: Adding SSO to a Dockerized Next.js Application
-nav_order: 6
+parent: Authentication
+nav_order: 2
 ---
 
 # Adding SSO to a Dockerized Next.js Application
+
+![azure-nextjs](assets/img/azure-nextjs.png)_Image retrieved from [medium.com](https://medium.com/codex/running-next-js-on-azure-app-services-84f707af761d)
+
+Modern websites often require an authentication solution to store user information and limit access to certain features and resources. Developing such a solution from scratch involves a lot of time and resources in addition to the numerous challenges such as handling security and data storage. Luckily, there are existing solutions that help developers with the authentication process such as the Microsoft Azure Directory (AD) single sign-on. Single sign-on (SSO) is an authentication method that allows users to sign in using one set of credentials to multiple independent software systems. Using SSO means users will not have to create new credentials for every application they use. With SSO, users can access all needed applications with a single account, which reduces the risk of users using repeated passwords while saving them the hassle of creating and remembering a new pair of credentials. Microsoft Azure relies on the IDC (OpenID Connect) and OAuth 2.0 industry standard protocols to support authentication and authorization into various application. McMaster University uses SSO to provide authentication and authorization services using MacIDs for its web applications. The University Technology Services (UTS) manage the McMaster Azure Directory and assist developers with setting up new applications for SSO. 
 
 We will now cover the process of adding single sign-on to a dockerized Next.js application. 
 
@@ -111,25 +116,43 @@ Open the `pages/_app.tsx` file and replace the contents of the file with the fol
 ```
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
+import {PageLayout} from '../Components/Layout/PageLayout';
 import React from 'react';
 import {PublicClientApplication} from '@azure/msal-browser';
 import {MsalProvider} from '@azure/msal-react';
 import {msalConfig} from '../config/authConfig';
+import {createTheme, ThemeProvider} from '@mui/material/styles'
+import {CssBaseline} from "@mui/material";
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function MyApp({Component, pageProps}: AppProps) {
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
+    const theme = createTheme({
+        palette: {
+            mode: prefersDarkMode ? "dark" : "light"
+        }
+    });
     return (
-        <MsalProvider instance={msalInstance}>
-            <Component {...pageProps} />
-        </MsalProvider>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <MsalProvider instance={msalInstance}>
+                <PageLayout>
+                    <center>
+                        <Component {...pageProps} />
+                    </center>
+                </PageLayout>
+            </MsalProvider>
+        </ThemeProvider>
     )
 }
 
 export default MyApp
 ```
 
-Make sure that the `msalInstance` constant is always declared outside the body of the `MyApp` to avoid any unpredictable behavior caused by race conditions.
+Make sure that the `msalInstance` constant is always declared outside the body of the `MyApp` to avoid any unpredictable behavior caused by race conditions. We added some boilerplate code to handle switching to dark mode if the user has dark mode enabled on their browser or OS settings.
 
 ### Add components to the application
 The project needs extra files to be created in order to render the the page layout, display the user profile data, and handle the sign in and sign out workflows.
@@ -530,38 +553,33 @@ export const PageLayout = (props: PageLayoutProps) => {
 
     return (
         <>
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
-                    <Container maxWidth="xl">
-                        <Toolbar>
-                            <Typography variant="h6" component={Link} href="/" sx={{ flexGrow: 1 }}>
-                                Microsoft Identity Platform
-                            </Typography>
-                            <Box sx={{flexGrow: 1}}>
-                                <Button
-                                    key={"Page 1"}
-                                    onClick={handleCloseNavMenu}
-                                    component={Link}
-                                    href={"/page_1"}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
-                                >
-                                    Page 1
-                                </Button>
-                            </Box>
+            <AppBar position="static">
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                        <Typography variant="h6" component={Link} href="/" display='flex' sx={{mr: 2}} >
+                            Microsoft Identity Platform
+                        </Typography>
+                        <Box>
+                            <Button
+                                key={"Page 1"}
+                                onClick={handleCloseNavMenu}
+                                component={Link}
+                                href={"/page_1"}
+                                sx={{my: 2, color: 'white', display: 'block'}}
+                            >
+                                Page 1
+                            </Button>
+                        </Box>
+                        <Box
+                            sx={{
+                                marginLeft: "auto",
+                            }}
+                        >
                             {isAuthenticated ? <SignOutButton /> : <SignInButton />}
-                        </Toolbar>
-                    </Container>
-                </AppBar>
-            </Box>
-            <br />
-            <br />
-            <h5>
-                <center>
-                    Welcome to the Microsoft Authentication Library For TypeScript -
-                    React/MUI SPA Tutorial
-                </center>
-            </h5>
-            <br />
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
             <br />
             {props.children}
         </>
@@ -693,6 +711,12 @@ const Home: NextPage = () => {
     const MainContent = () => {
         return (
             <div className="App">
+		        <h5>
+                    <center>
+                        Welcome to the Microsoft Authentication Library For TypeScript - React/MUI SPA Tutorial
+                    </center>
+                </h5>
+                <br />
                 <AuthenticatedTemplate>
                     <ProfileContent />
                 </AuthenticatedTemplate>
@@ -733,3 +757,4 @@ export default Home
 ```
 
 We added a `ProfileContent` function that is used to render the user's profile information. The `ProfileContent` component above is only rendered if the user is successfully authenticated since it is wrapped in an instance of `AuthenticatedTemplate`. Otherwise, a message indicating a user is not authenticated is rendered.
+

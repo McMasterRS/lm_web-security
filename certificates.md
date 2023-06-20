@@ -6,7 +6,9 @@ nav_order: 4
 
 # SSL Certificates
 
-Before registering your SPA on the Microsoft Azure Directory, you will need to request SSL certificates from UTS. This section of the workshop will guide you through the process of generating the required files to request SSL certificates and setting up those certificates on your dockerized Next.js application. 
+SSL certificates are a small data files that cryptographically establish an encrypted link between a web server and a browser. SSL certificates help protect user data by keeping it private and ensuring that this information is passed securely between the web server and browser using the encrypted link. By using SSL certificates on your website, you can prevent hackers from intercepting a user's private information after it has been submitted to the server. SSL certificates are considered a security requirement for most modern websites. As such, the University Technology Services (UTS) at McMaster requires web applications that want to use SSO to have SSL certificates as well. 
+
+Before registering your SPA on the Microsoft Azure Directory, you will need to request SSL certificates from UTS. This section of the learning module will guide you through the process of generating the required files to request SSL certificates and setting up those certificates on your dockerized Next.js application. 
 
 ### Create CSR with OpenSSL
 

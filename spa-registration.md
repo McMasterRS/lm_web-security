@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Microsoft Azure SPA Registration
-nav_order: 5
+parent: Authentication
+nav_order: 1
 ---
 
 # Microsoft Azure SPA Registration

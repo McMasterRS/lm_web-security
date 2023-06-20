@@ -1,7 +1,8 @@
 ---
 layout: default
 title: # Testing the SSO Demo SPA
-nav_order: 7
+parent: Authentication
+nav_order: 3
 ---
 
 # Testing the SSO Demo SPA
