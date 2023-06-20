@@ -1,6 +1,6 @@
 title: Introduction to Web Security # *** Enter workshop title here
-github_repo_url: "https://mcmasterrs.github.io/sso-tutorial" # ***Enter workshop URL (in github pages) here
-gh_edit_repository: "https://github.com/McMasterRS/sso-tutorial" #*** ENTER the github URL for your repo
+github_repo_url: "https://mcmasterrs.github.io/web-security" # ***Enter workshop URL (in github pages) here
+gh_edit_repository: "https://github.com/McMasterRS/web-security" #*** ENTER the github URL for your repo
 
 subtitle: "Research Software Development Workshop - Web Security"
 favicon_ico: "https://raw.githubusercontent.com/McMasterRS/workshop-template/main/assets/img/favicon.ico"
