@@ -7,7 +7,9 @@ nav_order: 2
 
 # Adding SSO to a Dockerized Next.js Application
 
-![azure-nextjs](assets/img/azure-nextjs.png)_Image retrieved from [medium.com](https://medium.com/codex/running-next-js-on-azure-app-services-84f707af761d)
+![azure-nextjs](assets/img/azure-nextjs.png)
+
+_Image retrieved from [medium.com](https://medium.com/codex/running-next-js-on-azure-app-services-84f707af761d)_  
 
 Modern websites often require an authentication solution to store user information and limit access to certain features and resources. Developing such a solution from scratch involves a lot of time and resources in addition to the numerous challenges such as handling security and data storage. Luckily, there are existing solutions that help developers with the authentication process such as the Microsoft Azure Directory (AD) single sign-on. Single sign-on (SSO) is an authentication method that allows users to sign in using one set of credentials to multiple independent software systems. Using SSO means users will not have to create new credentials for every application they use. With SSO, users can access all needed applications with a single account, which reduces the risk of users using repeated passwords while saving them the hassle of creating and remembering a new pair of credentials. Microsoft Azure relies on the IDC (OpenID Connect) and OAuth 2.0 industry standard protocols to support authentication and authorization into various application. McMaster University uses SSO to provide authentication and authorization services using MacIDs for its web applications. The University Technology Services (UTS) manage the McMaster Azure Directory and assist developers with setting up new applications for SSO. 
 
@@ -16,20 +18,24 @@ We will now cover the process of adding single sign-on to a dockerized Next.js a
 ### Install identity and MUI packages
 The azure identity related `npm` packages must be installed in the project to enable user authentication. We will also make use of the Material UI (MUI) library for styling and components. 
 
-Add the `msal-react` and `msal-browser` packages to your project using the following command:
-```
+Add the `msal-react` and `msal-browser` packages to your project using the following command:  
+
+```bash
 npm install @azure/msal-browser @azure/msal-react
 ```
-Add the MUI library to your project:
-```
+
+Add the MUI library to your project:  
+
+```bash
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
 ### Creating the authentication configuration file
 
 1. In the `client` folder of your project, create a new directory called `config`. Create a new file called `authConfig.ts` inside this directory.
-2. Open `authConfig.ts` and add the following code snippet:
-```
+2. Open `authConfig.ts` and add the following code snippet:  
+
+```ts
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
@@ -99,21 +105,25 @@ export const graphConfig = {
     graphMeEndpoint: "https://graph.microsoft.com/v1.0/me",
 };
 ```
+
 3. Create an  `.env.development.local` file in the `client` directory
-4. Add the following definitions to `.env.development.local`:
+4. Add the following definitions to `.env.development.local`:  
+
 ```
 CLIENT_ID=Enter_the_App_Id_Here
 TENANT_ID=Enter_the_Tenant_Id_here
 REDIRECT_URI=Enter_Redirect_Uri_here
 ```
-  Replace the following values with the values from the app registration file you received from UTS:
+
+5. Replace the following values with the values from the app registration file you received from UTS:
   - `CLIENT_ID` - The identifier of the application, also referred to as the client. Replace `Enter_the_Application_Id_Here` with the **App-Id** value provided by UTS.
   - `TENANT_ID` - the identifier of the tenant where the application is registered. Replace  `Enter_the_Tenant_Id_Here` with the **Tenant Id (McMaster)** provided by UTS.
-5. `REDIRECT_URI`- the redirect URI provided to UTS in the registration ticket. Replace `Enter_the_Redirect_Uri_Here` with the redirect URI you provided to UTS.
+  - `REDIRECT_URI`- the redirect URI provided to UTS in the registration ticket. Replace `Enter_the_Redirect_Uri_Here` with the redirect URI you provided to UTS.
 
 ### Modify `_app.tsx_` to include the authentication provider
-Open the `pages/_app.tsx` file and replace the contents of the file with the following code snippet to use the `msal` packages:
-```
+Open the `pages/_app.tsx` file and replace the contents of the file with the following code snippet to use the `msal` packages:  
+
+```ts
 import '../styles/globals.css'
 import type {AppProps} from 'next/app'
 import {PageLayout} from '../Components/Layout/PageLayout';
@@ -155,12 +165,14 @@ export default MyApp
 Make sure that the `msalInstance` constant is always declared outside the body of the `MyApp` to avoid any unpredictable behavior caused by race conditions. We added some boilerplate code to handle switching to dark mode if the user has dark mode enabled on their browser or OS settings.
 
 ### Add components to the application
-The project needs extra files to be created in order to render the the page layout, display the user profile data, and handle the sign in and sign out workflows.
 
-In the `client` directory of your project, create a `Components` directory with an `Authentication` subdirectory inside of it.
+The project needs extra files to be created in order to render the the page layout, display the user profile data, and handle the sign in and sign out workflows.  
 
-Create a new file inside the `Authentication` directory called `ProfileData.tsx` and add the following code to it:
-```
+In the `client` directory of your project, create a `Components` directory with an `Authentication` subdirectory inside of it.  
+
+Create a new file inside the `Authentication` directory called `ProfileData.tsx` and add the following code to it:  
+
+```ts
 import React from "react";
 /**
  * Renders information about the user obtained from MS Graph
@@ -197,11 +209,11 @@ export const ProfileData = (props: ProfileDataProps) => {
 };
 ```
 
-The `ProfileData` component is used to display the user information (i.e., first name, last name, email and ID) after a user has successfully logged in. 
+The `ProfileData` component is used to display the user information (i.e., first name, last name, email and ID) after a user has successfully logged in.  
 
-We will now create the `SignInButton` and `SignOutButton` components.
-Create a new file called `SignInButton.tsx` inside the `Authencation` directory and add the following content to it:
-```
+We will now create the `SignInButton` and `SignOutButton` components. Create a new file called `SignInButton.tsx` inside the `Authencation` directory and add the following content to it:  
+
+```ts
 {% raw %}
 import React from "react";
 import { useMsal } from "@azure/msal-react";
@@ -322,10 +334,11 @@ export const SignInButton = () => {
 {% endraw %}
 ```
 
-The `SignInButton` component renders a dropdown button with child buttons for logging in with a popup or with redirect.
+The `SignInButton` component renders a dropdown button with child buttons for logging in with a popup or with redirect.  
 
-Similarly, create a `SignOutButton.tsx` file inside the `Authentication` directory and add the following code snippet to it:
-```
+Similarly, create a `SignOutButton.tsx` file inside the `Authentication` directory and add the following code snippet to it:  
+
+```ts
 {% raw %}
 import React from "react";
 import { useMsal } from "@azure/msal-react";
@@ -445,13 +458,15 @@ export const SignOutButton = () => {
 {% endraw %}
 ```
 
-Akin to the `SignInButton`, the `SignOutButton` component renders a dropdown button with two sign out options. 
+Akin to the `SignInButton`, the `SignOutButton` component renders a dropdown button with two sign out options.  
 
 ### Create the `PermissionGate` component
+
 We will create a `PermissionGate` component that prevents users from accessing our webpage before logging in. If a user is not yet successfully authenticated, the `PermissionGate` will display a `Modal` message informing the user that they need to login to access our website.
 
-Create a new `PermissionGate` directory inside the components directory and add the following code to it:
-```
+Create a new `PermissionGate` directory inside the components directory and add the following code to it:  
+
+```ts
 {% raw %}
 import React from 'react'
 import Box from '@mui/material/Box'
@@ -509,14 +524,15 @@ export default function PermissionGate({children}: PermissionGateProps) {
 {% endraw %}
 ```
 
-We made use of the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components from the `msal-react` package to conditionally render components based on the authentication status of the current user. The `AuthenticatedTemplate` and `UnauthenticatedTemplate` components will only render their children if a user is authenticated or unauthenticated, respectively.
+We made use of the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components from the `msal-react` package to conditionally render components based on the authentication status of the current user. The `AuthenticatedTemplate` and `UnauthenticatedTemplate` components will only render their children if a user is authenticated or unauthenticated, respectively.  
 
 ### Create the page layout
 
-We need to create a navigation bar to conditionally the sign in or sign out buttons as well as a link to another page with restricted content.
+We need to create a navigation bar to conditionally the sign in or sign out buttons as well as a link to another page with restricted content.  
 
-Create a new directory called `Layout` inside the `Components` directory. Create a new file called `PageLayout.tsx` and add the following code snippet to it:
-```
+Create a new directory called `Layout` inside the `Components` directory. Create a new file called `PageLayout.tsx` and add the following code snippet to it:  
+
+```ts
 {% raw %}
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved.
@@ -627,10 +643,12 @@ export default function Home() {
 Notice that the components inside "Page 1" are wrapped with the `PermissionGate` components, which means that they are only viewable if the user is authenticated.
 
 ### Create the Microsoft Graph client helper
+
 To allow the SPA to request access to Microsoft Graph, a reference to the `graphConfig` object needs to be added. We will create a new `graph.ts` file that contains the Graph REST API endpoint defined in the `authConfig.ts` file.
 
-In the `config` directory of your project, create `graph.ts` and add the following code snippet to request access to Microsoft Graph:
-```
+In the `config` directory of your project, create `graph.ts` and add the following code snippet to request access to Microsoft Graph:  
+
+```ts
 import { graphConfig } from "./authConfig";
 
 /**
@@ -655,8 +673,10 @@ export async function callMsGraph(accessToken: string) {
 ```
 
 ### Modify `index.tsx`
-Open the `pages/index.tsx` file and replace its content with the following code snippet:
-```
+
+Open the `pages/index.tsx` file and replace its content with the following code snippet:  
+
+```ts
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
@@ -756,5 +776,5 @@ const Home: NextPage = () => {
 export default Home
 ```
 
-We added a `ProfileContent` function that is used to render the user's profile information. The `ProfileContent` component above is only rendered if the user is successfully authenticated since it is wrapped in an instance of `AuthenticatedTemplate`. Otherwise, a message indicating a user is not authenticated is rendered.
+We added a `ProfileContent` function that is used to render the user's profile information. The `ProfileContent` component above is only rendered if the user is successfully authenticated since it is wrapped in an instance of `AuthenticatedTemplate`. Otherwise, a message indicating a user is not authenticated is rendered.  
 
