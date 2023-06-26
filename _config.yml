@@ -1,8 +1,8 @@
-title: Introduction to Web Security # *** Enter workshop title here
-github_repo_url: "https://mcmasterrs.github.io/web-security" # ***Enter workshop URL (in github pages) here
-gh_edit_repository: "https://github.com/McMasterRS/web-security" #*** ENTER the github URL for your repo
+title: Basic Security for Web Development # *** Enter workshop title here
+github_repo_url: "https://mcmasterrs.github.io/lm_web-security" # ***Enter workshop URL (in github pages) here
+gh_edit_repository: "https://github.com/McMasterRS/lm_web-security" #*** ENTER the github URL for your repo
 
-subtitle: "Research Software Development Workshop - Web Security"
+subtitle: "Research Software Development Learning Module - Basic Security for Web Development"
 favicon_ico: "https://raw.githubusercontent.com/McMasterRS/workshop-template/main/assets/img/favicon.ico"
 nav_footer_logo_bottom: "https://raw.githubusercontent.com/McMasterRS/workshop-template/main/assets/img/logo.png"
 nav_footer_logo_bottom_href: "https://research.mcmaster.ca/home/support-for-researchers/research-resources/research-software-development/"

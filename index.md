@@ -4,7 +4,7 @@ title: Introduction
 nav_order: 1
 ---
 
-# Introduction to Web Security
+# Basic Security for Web Development
 
 ![web-security](assets/img/web-security.jpg)
 
