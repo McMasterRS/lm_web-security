@@ -3,13 +3,13 @@ layout: default
 title: Outline
 nav_order: 3
 ---
-## Goal of this workshop
+## Goal of this Learning module
 
-The goal of this workshop is to learn how to improve the security of a Next.js single-page application by using SSL certificates, enabling single sign-on using Microsoft Azure, using HTTP security headers and secure local storage. 
+The goal of this learning module is to learn how to improve the security of a Next.js single-page application by using SSL certificates, enabling single sign-on using Microsoft Azure, using HTTP security headers and secure local storage. 
 
 ### Learning Objectives
 
-At the end of this workshop, attendees will be able to:
+At the end of this learning module, attendees will be able to:
 
 - Request SSL certificates from UTS.
 - Use the SSL certificates a dockerized Next.js application with Nginx
