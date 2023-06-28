@@ -38,7 +38,7 @@ Once you have the CSR file ready, you can start a support ticket with UTS using 
 
 When your SSL certificates are ready, you will receive an email from Sectigo with links to download these certificates in various formats. We recommend using the "Certificate (w/ issuer after), PEM encoded" format.  
 
-The SSL certificate, private key you used to generate the CSR and the passphrase you assigned for the private key are be placed in `/etc/ssl/certs/`, `/etc/ssl/private/` and `/etc/ssl/` respectively. The files should be readable and writable by root user only. You may set the permission for the files using the command belown.  
+The SSL certificate, private key you used to generate the CSR and the passphrase you assigned for the private key are be placed in `/etc/ssl/certs/`, `/etc/ssl/private/` and `/etc/ssl/` respectively. The files should be readable and writable by root user only. You may set the permission for the files using the command below.  
 
 ```bash
 chmod 600 <filename>
