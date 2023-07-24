@@ -24,7 +24,7 @@ npm install react-secure-storage
 
 2. **Add `Snackbar` component**
 
-Add the following import statements to `pages/page_1/index.tsx`:  
+Add the following import statements to `app/page_1/page.tsx`:  
 
 ```ts
 import Button from "@mui/material/Button";
@@ -207,10 +207,12 @@ const handleClear = () => {
 
 Note that the `secureLocalStorage.clear()` method will clear all saved data in the local storage including any variable that were saved using the regular `localStorage` library.  
 
-Your `pages/page_1/index.tsx` file should now contain the following lines of code:  
+Your `app/page_1/page.tsx` file should now contain the following lines of code:  
 
 ```ts
 {% raw %}
+'use client';
+ 
 import Typography from '@mui/material/Typography'
 import {useEffect} from "react";
 import Container from "@mui/material/Container";

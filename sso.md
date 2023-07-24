@@ -120,12 +120,13 @@ REDIRECT_URI=Enter_Redirect_Uri_here
   - `TENANT_ID` - the identifier of the tenant where the application is registered. Replace  `Enter_the_Tenant_Id_Here` with the **Tenant Id (McMaster)** provided by UTS.
   - `REDIRECT_URI`- the redirect URI provided to UTS in the registration ticket. Replace `Enter_the_Redirect_Uri_Here` with the redirect URI you provided to UTS.
 
-### Modify `_app.tsx_` to include the authentication provider
-Open the `pages/_app.tsx` file and replace the contents of the file with the following code snippet to use the `msal` packages:  
+### Modify `template.tsx` to include the authentication provider
+Open the `app/template.tsx` file and replace the contents of the file with the following code snippet to use the `msal` packages:  
 
 ```ts
+'use client';
+
 import '../styles/globals.css'
-import type {AppProps} from 'next/app'
 import {PageLayout} from '../Components/Layout/PageLayout';
 import React from 'react';
 import {PublicClientApplication} from '@azure/msal-browser';
@@ -137,7 +138,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
-function MyApp({Component, pageProps}: AppProps) {
+export default function Template({children}: {children?: React.ReactNode} ) {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
     const theme = createTheme({
@@ -151,18 +152,16 @@ function MyApp({Component, pageProps}: AppProps) {
             <MsalProvider instance={msalInstance}>
                 <PageLayout>
                     <center>
-                        <Component {...pageProps} />
+                        {children}
                     </center>
                 </PageLayout>
             </MsalProvider>
         </ThemeProvider>
     )
 }
-
-export default MyApp
 ```
 
-Make sure that the `msalInstance` constant is always declared outside the body of the `MyApp` to avoid any unpredictable behavior caused by race conditions. We added some boilerplate code to handle switching to dark mode if the user has dark mode enabled on their browser or OS settings.
+Make sure that the `msalInstance` constant is always declared outside the body of the `Template` function to avoid any unpredictable behavior caused by race conditions. We added some boilerplate code to handle switching to dark mode if the user has dark mode enabled on their browser or OS settings.
 
 ### Add components to the application
 
@@ -605,10 +604,12 @@ export const PageLayout = (props: PageLayoutProps) => {
 ```
 
 ### Create a new page with restricted content
-Inside the `pages` directory of your project, create a new directory called `page_1` with an `index.tsx` file inside it. 
+Inside the `app` directory of your project, create a new directory called `page_1` with an `page.tsx` file inside it. 
 
-Add the following code to `page_1/index.tsx`:
-```
+Add the following code to `page_1/page.tsx`:
+```ts
+'use client';
+
 import Typography from '@mui/material/Typography'
 import {useEffect} from "react";
 import Container from "@mui/material/Container";
@@ -672,15 +673,16 @@ export async function callMsGraph(accessToken: string) {
 }
 ```
 
-### Modify `index.tsx`
+### Modify `page.tsx`
 
-Open the `pages/index.tsx` file and replace its content with the following code snippet:  
+Open the `app/page.tsx` file and replace its content with the following code snippet:  
 
 ```ts
+'use client';
+
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import LoginForm from '../Components/LoginForm/LoginForm'
 import {AuthenticatedTemplate, UnauthenticatedTemplate, useMsal} from "@azure/msal-react";
 import React from "react";
 import {loginRequest, msalConfig} from "../config/authConfig";
@@ -688,7 +690,6 @@ import {callMsGraph} from "../config/graph";
 import {ProfileData} from "../Components/Authentication/ProfileData";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import PermissionGate from "../Components/PermissionGate/PermissionGate";
 
 const Home: NextPage = () => {
     /**
@@ -712,7 +713,7 @@ const Home: NextPage = () => {
 
         return (
             <>
-                <h5 className="card-title">Welcome {accounts[0].name}</h5>
+                <h5 className="card-title">Welcome  {accounts[0] ? accounts[0].name: ''}</h5>
                 <br/>
                 {graphData ? (
                     <ProfileData graphData={graphData} />
@@ -731,9 +732,10 @@ const Home: NextPage = () => {
     const MainContent = () => {
         return (
             <div className="App">
-		        <h5>
+                <h5>
                     <center>
-                        Welcome to the Microsoft Authentication Library For TypeScript - React/MUI SPA Tutorial
+                        Welcome to the Microsoft Authentication Library For TypeScript -
+                        React/MUI SPA Tutorial
                     </center>
                 </h5>
                 <br />
@@ -752,24 +754,22 @@ const Home: NextPage = () => {
         );
     };
     return (
-        <PermissionGate>
-            <div className={styles.container}>
-                <Head>
-                    <title>MacID Authentication Example</title>
-                    <meta
-                        name="description"
-                        content="Generated by create next app"
-                    />
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
+        <div className={styles.container}>
+            <Head>
+                <title>MacID Authentication Example</title>
+                <meta
+                    name="description"
+                    content="Generated by create next app"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
 
-                <main className={styles.main}>
-                    <Box>
-                        <MainContent />
-                    </Box>
-                </main>
-            </div>
-        </PermissionGate>
+            <main className={styles.main}>
+                <Box>
+                    <MainContent />
+                </Box>
+            </main>
+        </div>
     )
 }
 
