@@ -4,13 +4,13 @@ title: Secure Local Storage
 nav_order: 7
 ---
 
-## Securely Storing Data in Local Storage in a Next.js SPA
+# Securely Storing Data in Local Storage in a Next.js SPA
 
 Local storage is a type of client-side web storage that allows web applications to store data locally within the user’s browser. This web API enables developers to store key-value pairs in the browser’s memory without an expiration date. Developers often employ this tool to persist data across browser sessions and page refreshes. Local storage can be useful for storing user preferences (language, theme, etc.) or session data.  
 
 Storing sensitive user information to the browser's local storage is often discouraged between it can be easily accessed by malicious scripts. User information should always be stored on the server side where it benefits from added security measures. Nevertheless, it is always a good idea to encrypt any information that you store in the local storage especially if you suspect that it can be used for malicious attacks.
 
-### The `react-secure-storage` library
+## The `react-secure-storage` library
 
 The [`react-secure-storage`](https://www.npmjs.com/package/react-secure-storage) library uses a combination of AES-256 encryption for securing data stored in the browser's local storage. This library generates a secure key for every browser and encrypt the data using this key, which means only the browser which encrypted the data can decrypt it. This added security measure will prevent hackers from using any data that they acquired from a user's local storage.  
 
@@ -193,7 +193,7 @@ const handleDelete = () => {
 }
 ```
 
-6. Clearing the local storage:
+6. **Clearing the local storage:**
 
 Finally, we will add a `handleClear` function that deletes all saved data from the local storage using the `clear()` method provided by `secureLocalStorage`:  
 
@@ -369,7 +369,7 @@ export default function Page_1() {
 {% endraw %}
 ```
 
-### Testing 
+## Testing 
 
 Navigate to "Page 1" by clicking the corresponding button after logging in. You will be presented with the following page:  
 

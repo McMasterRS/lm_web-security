@@ -19,19 +19,19 @@ By adding security headers to the response of our pages, we can minimize the pos
 
 Next.js allows you to set security headers from the `next.config.js` file situated in the main folder of your project. We will make use of six different HTTP security headers to help protect our application. 
 
-#### `X-Frame-Options` header
+### `X-Frame-Options` header
 
 The `X-Frame-Options` header is designed to prevent clickjacking attempts on a website by ensuring that the site’s content is not embedded in other websites.  
 
 We will set the value of the `X-Frame-Options` header to `DENY` in order to prevent browsers from loading our website in an `<iframe>`, `<frame>`, `<object>`, or `<embed>` element. Attackers can use these elements to add invisible controls on top of the UI elements of our website to trick users into giving out information or unwillingly performing harmful tasks.  
 
-#### `Content-Security-Policy` header
+### `Content-Security-Policy` header
 
 The `Content-Security-Policy` header allows you to set a policy for which domains are approved for executable scripts as well as the kind of resources (e.g., fonts, images, etc.) that can be loaded into your website.  
 
 We will use the `Content-Security-Policy` header to allow resources to be loaded only from the same origin (`self`) and enable inline scripts and styles, which are necessary for Material UI (MUI) components. We will also authorize our website to connect to the `login.microsoftonline.com` domain for SSO in addition to accessing Google Fonts to download the Roboto family of fonts.  
 
-#### `X-Content-Type-Options` header
+### `X-Content-Type-Options` header
 
 The `X-Content-Type-Options` header is designed to disable Multipurpose Internet Mail Extensions (MIME) type sniffing, a technique used by browsers to determine type of a resource based on the response content instead of what is specified in the `Content-Type` header.  
 
@@ -39,13 +39,13 @@ Attackers can manipulate the MIME sniffing algorithm to force the browser into i
 
 Using the the `nosniff` directive in the `X-Content-Type-Options` header forces the browser to adhere to the MIME types specified in `Content-Type` and thus reduces the possibility of XSS attacks.  
 
-#### `Permissions-Policy` header
+### `Permissions-Policy` header
 
 The `Permissions-Policy` header allows you to specify the Web APIs are allowed to be used within your website. This security header enables you to opt out of using external devices that are not needed for your website to function. The geolocation, camera, microphone APIs and many more should always be disabled if they are not used in your web application. Disabling unused web APIs helps lower the risk of attackers exploiting these channels for fraudulent or malicious activities.  
 
 We will disable the camera, battery, geolocation and microphone web APIs since our demo website does not need them.  
 
-#### `Referrer-Policy` header
+### `Referrer-Policy` header
 
 If your website contains clickable links to another domain then , then your website is said to be a referrer.  Whenever a user clicks on one of those links, certain information about the referrer is sent to the target domain in the HTTP request’s referrer header.  
 
@@ -53,11 +53,11 @@ The `Referrer-Policy` header allows developers to specify how much information
 
 We will make use of  the `origin-when-cross-origin` directive for the `Referrer-Policy` to send the path, origin, and query string when performing a same-origin request between equal protocol levels. An example of an equal protocol level would be from HTTPS to HTTPS.  
 
-#### `Strict-Transport-Security` header
+### `Strict-Transport-Security` header
 
 The `Strict-Transport-Security` header instructs web browsers to connect to your website only via HTTPS , thus ensuring that every connection is encrypted and secure from infiltration by third parties. You can also specify the duration in seconds that the browser will remember this protocol, with the recommended duration being 31536000s or 1 year. We will also use the `includeSubDomains` directive to ensure that all subdomains also adhere tot eh HTTPS protocol requirement.  
 
-### Adding HTTPS Security Headers to a Next.js SPA
+## Adding HTTPS Security Headers to a Next.js SPA
 
 To add HTTPS security headers to your Next.js SPA, simply open the  `next.config.js` file located in the root directory of your project and modify it as shown below:  
 

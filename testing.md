@@ -9,13 +9,13 @@ nav_order: 3
 
 Our demo application is now complete, so we can test signing in using our MacID credentials.
 
-### Run a production instance of the SPA
+## Run a production instance of the SPA
 Create a production instance of the demo SPA using the following commad:
 ```
 docker-compose --file docker-compose.production.yaml -p auth-demo-prod up --build
 ```
 
-#### Calling the API from the application
+### Calling the API from the application
 1. Open your browser of choice and navigate to the fully qualified domain name of your server.
 2. Select the **SIGN IN** button. For the purposes of this tutorial, choose the **Sign in using Popup** option.
 

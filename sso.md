@@ -15,7 +15,7 @@ Modern websites often require an authentication solution to store user informati
 
 We will now cover the process of adding single sign-on to a dockerized Next.js application. 
 
-### Install identity and MUI packages
+## Install identity and MUI packages
 The azure identity related `npm` packages must be installed in the project to enable user authentication. We will also make use of the Material UI (MUI) library for styling and components. 
 
 Add the `msal-react` and `msal-browser` packages to your project using the following command:  
@@ -30,7 +30,7 @@ Add the MUI library to your project:
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
-### Creating the authentication configuration file
+## Creating the authentication configuration file
 
 1. In the `client` folder of your project, create a new directory called `config`. Create a new file called `authConfig.ts` inside this directory.
 2. Open `authConfig.ts` and add the following code snippet:  
@@ -120,7 +120,7 @@ REDIRECT_URI=Enter_Redirect_Uri_here
   - `TENANT_ID` - the identifier of the tenant where the application is registered. Replace  `Enter_the_Tenant_Id_Here` with the **Tenant Id (McMaster)** provided by UTS.
   - `REDIRECT_URI`- the redirect URI provided to UTS in the registration ticket. Replace `Enter_the_Redirect_Uri_Here` with the redirect URI you provided to UTS.
 
-### Modify `template.tsx` to include the authentication provider
+## Modify `template.tsx` to include the authentication provider
 Open the `app/template.tsx` file and replace the contents of the file with the following code snippet to use the `msal` packages:  
 
 ```ts
@@ -163,7 +163,7 @@ export default function Template({children}: {children?: React.ReactNode} ) {
 
 Make sure that the `msalInstance` constant is always declared outside the body of the `Template` function to avoid any unpredictable behavior caused by race conditions. We added some boilerplate code to handle switching to dark mode if the user has dark mode enabled on their browser or OS settings.
 
-### Add components to the application
+## Add components to the application
 
 The project needs extra files to be created in order to render the the page layout, display the user profile data, and handle the sign in and sign out workflows.  
 
@@ -459,7 +459,7 @@ export const SignOutButton = () => {
 
 Akin to the `SignInButton`, the `SignOutButton` component renders a dropdown button with two sign out options.  
 
-### Create the `PermissionGate` component
+## Create the `PermissionGate` component
 
 We will create a `PermissionGate` component that prevents users from accessing our webpage before logging in. If a user is not yet successfully authenticated, the `PermissionGate` will display a `Modal` message informing the user that they need to login to access our website.
 
@@ -525,7 +525,7 @@ export default function PermissionGate({children}: PermissionGateProps) {
 
 We made use of the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components from the `msal-react` package to conditionally render components based on the authentication status of the current user. The `AuthenticatedTemplate` and `UnauthenticatedTemplate` components will only render their children if a user is authenticated or unauthenticated, respectively.  
 
-### Create the page layout
+## Create the page layout
 
 We need to create a navigation bar to conditionally the sign in or sign out buttons as well as a link to another page with restricted content.  
 
@@ -603,7 +603,7 @@ export const PageLayout = (props: PageLayoutProps) => {
 {% endraw %}s
 ```
 
-### Create a new page with restricted content
+## Create a new page with restricted content
 Inside the `app` directory of your project, create a new directory called `page_1` with an `page.tsx` file inside it. 
 
 Add the following code to `page_1/page.tsx`:
@@ -643,7 +643,7 @@ export default function Home() {
 
 Notice that the components inside "Page 1" are wrapped with the `PermissionGate` components, which means that they are only viewable if the user is authenticated.
 
-### Create the Microsoft Graph client helper
+## Create the Microsoft Graph client helper
 
 To allow the SPA to request access to Microsoft Graph, a reference to the `graphConfig` object needs to be added. We will create a new `graph.ts` file that contains the Graph REST API endpoint defined in the `authConfig.ts` file.
 
@@ -673,7 +673,7 @@ export async function callMsGraph(accessToken: string) {
 }
 ```
 
-### Modify `page.tsx`
+## Modify `page.tsx`
 
 Open the `app/page.tsx` file and replace its content with the following code snippet:  
 
