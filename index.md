@@ -18,5 +18,5 @@ No previous experience with the Azure AD is required. Familiarity with TypeScrip
 
 ### Prerequisites 
 - A server to host your SPA
-- A dockerized Next.js application. You can follow the [Docker Tutorial](https://mcmasterrs.github.io/docker-tutorial) to familiarize yourself with Docker and create a dockerized Next.js application
+- A dockerized Next.js application. You can follow the [Docker Tutorial](https://mcmasterrs.github.io/lm_docker4web/) to familiarize yourself with Docker and create a dockerized Next.js application
 

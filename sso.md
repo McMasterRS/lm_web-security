@@ -463,7 +463,7 @@ Akin to the `SignInButton`, the `SignOutButton` component renders a dropdown but
 
 We will create a `PermissionGate` component that prevents users from accessing our webpage before logging in. If a user is not yet successfully authenticated, the `PermissionGate` will display a `Modal` message informing the user that they need to login to access our website.
 
-Create a new `PermissionGate` directory inside the components directory and add the following code to it:  
+Create a new `PermissionGate` directory inside the components directory and add a `PermissionGate.tsx` file to it. Add the following code to `PermissionGate.tsx`:  
 
 ```ts
 {% raw %}
