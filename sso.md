@@ -778,3 +778,6 @@ export default Home
 
 We added a `ProfileContent` function that is used to render the user's profile information. The `ProfileContent` component above is only rendered if the user is successfully authenticated since it is wrapped in an instance of `AuthenticatedTemplate`. Otherwise, a message indicating a user is not authenticated is rendered.  
 
+## Sending Tokens to The Backend
+
+You can use headers or secure cookies to send tokens from the frontend to the backend. Tokens can be used to validate the user identity in the backend. Never send tokens or sensitive information in query parameters.
