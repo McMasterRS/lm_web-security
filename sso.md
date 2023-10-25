@@ -18,7 +18,7 @@ We will now cover the process of adding single sign-on to a dockerized Next.js a
 ## Install identity and MUI packages
 The azure identity related `npm` packages must be installed in the project to enable user authentication. We will also make use of the Material UI (MUI) library for styling and components. 
 
-Add the `msal-react` and `msal-browser` packages to your project using the following command:  
+Add the `msal-react` and `msal-browser` packages to your project by `cd`-ing into your `client` directory and running the following command:  
 
 ```bash
 npm install @azure/msal-browser @azure/msal-react
@@ -52,9 +52,9 @@ import * as process from "process";
 
 export const msalConfig = {
     auth: {
-        clientId: `${process.env.CLIENT_ID}`,
-        authority: `https://login.microsoftonline.com/${process.env.TENANT_ID}`,
-        redirectUri: `${process.env.REDIRECT_URI}`,
+        clientId: `${process.env.MAC_AZURE_CLIENT_ID}`,
+        authority: `https://login.microsoftonline.com/${process.env.MAC_AZURE_TENANT_ID}`,
+        redirectUri: `${process.env.MAC_AZURE_REDIRECT_URI}`,
     },
     cache: {
         cacheLocation: "sessionStorage", // This configures where your cache will be stored
@@ -106,19 +106,21 @@ export const graphConfig = {
 };
 ```
 
-3. Create an  `.env.development.local` file in the `client` directory
-4. Add the following definitions to `.env.development.local`:  
+3. Create a `config` directory in the root of your project and create new `.env.development.local` and `.env.production.local` files in it.
+4. Add the following definitions to `.env.development.local` and `.env.production.local`:  
 
 ```
-CLIENT_ID=Enter_the_App_Id_Here
-TENANT_ID=Enter_the_Tenant_Id_here
-REDIRECT_URI=Enter_Redirect_Uri_here
+HOST_PORT=Enter_the_Host_Port_Here
+MAC_AZURE_CLIENT_ID=Enter_the_App_Id_Here
+MAC_AZURE_TENANT_ID=Enter_the_Tenant_Id_here
+MAC_AZURE_REDIRECT_URI=Enter_Redirect_Uri_here
 ```
 
-5. Replace the following values with the values from the app registration file you received from UTS:
-  - `CLIENT_ID` - The identifier of the application, also referred to as the client. Replace `Enter_the_Application_Id_Here` with the **App-Id** value provided by UTS.
-  - `TENANT_ID` - the identifier of the tenant where the application is registered. Replace  `Enter_the_Tenant_Id_Here` with the **Tenant Id (McMaster)** provided by UTS.
-  - `REDIRECT_URI`- the redirect URI provided to UTS in the registration ticket. Replace `Enter_the_Redirect_Uri_Here` with the redirect URI you provided to UTS.
+5. Enter the value of your host port after  `HOST_PORT=`.
+6. Replace the following values with the values from the app registration file you received from UTS:
+  - `MAC_AZURE_CLIENT_ID` - The identifier of the application, also referred to as the client. Replace `Enter_the_Application_Id_Here` with the **App-Id** value provided by UTS.
+  - `MAC_AZURE_TENANT_ID` - the identifier of the tenant where the application is registered. Replace  `Enter_the_Tenant_Id_Here` with the **Tenant Id (McMaster)** provided by UTS.
+  - `MAC_AZURE_REDIRECT_URI`- the redirect URI provided to UTS in the registration ticket. Replace `Enter_the_Redirect_Uri_Here` with the redirect URI you provided to UTS.
 
 ## Modify `template.tsx` to include the authentication provider
 Open the `app/template.tsx` file and replace the contents of the file with the following code snippet to use the `msal` packages:  
@@ -126,12 +128,12 @@ Open the `app/template.tsx` file and replace the contents of the file with the f
 ```ts
 'use client';
 
-import '../styles/globals.css'
-import {PageLayout} from '../Components/Layout/PageLayout';
+import './styles/globals.css'
+import {PageLayout} from '@/components/Layout/PageLayout';
 import React from 'react';
 import {PublicClientApplication} from '@azure/msal-browser';
 import {MsalProvider} from '@azure/msal-react';
-import {msalConfig} from '../config/authConfig';
+import {msalConfig} from './config/authConfig';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {CssBaseline} from "@mui/material";
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -167,7 +169,7 @@ Make sure that the `msalInstance` constant is always declared outside the body o
 
 The project needs extra files to be created in order to render the the page layout, display the user profile data, and handle the sign in and sign out workflows.  
 
-In the `client` directory of your project, create a `Components` directory with an `Authentication` subdirectory inside of it.  
+In the `client` directory of your project, create a `components` directory with an `Authentication` subdirectory inside of it.  
 
 Create a new file inside the `Authentication` directory called `ProfileData.tsx` and add the following code to it:  
 
@@ -216,7 +218,7 @@ We will now create the `SignInButton` and `SignOutButton` components. Create a n
 {% raw %}
 import React from "react";
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../../config/authConfig";
+import { loginRequest } from "@/app/config/authConfig";
 import Button from '@mui/material/Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
@@ -471,7 +473,7 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import {AuthenticatedTemplate, UnauthenticatedTemplate, useIsAuthenticated, useMsal} from "@azure/msal-react";
-import {loginRequest} from "../../config/authConfig";
+import {loginRequest} from "@/app/config/authConfig";
 import {InteractionStatus} from "@azure/msal-browser";
 
 interface PermissionGateProps {
@@ -614,8 +616,8 @@ import Typography from '@mui/material/Typography'
 import {useEffect} from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import styles from '../../styles/Home.module.css'
-import PermissionGate from "../../Components/PermissionGate/PermissionGate";
+import styles from '../styles/page.module.css'
+import PermissionGate from "@/components/PermissionGate/PermissionGate";
 
 export default function Home() {
     useEffect(() => {
@@ -682,12 +684,12 @@ Open the `app/page.tsx` file and replace its content with the following code sni
 
 import type {NextPage} from 'next'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from './styles/page.module.css'
 import {AuthenticatedTemplate, UnauthenticatedTemplate, useMsal} from "@azure/msal-react";
 import React from "react";
-import {loginRequest, msalConfig} from "../config/authConfig";
-import {callMsGraph} from "../config/graph";
-import {ProfileData} from "../Components/Authentication/ProfileData";
+import {loginRequest, msalConfig} from "./config/authConfig";
+import {callMsGraph} from "./config/graph";
+import {ProfileData} from "@/components/Authentication/ProfileData";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
