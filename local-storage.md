@@ -8,7 +8,7 @@ nav_order: 7
 
 Local storage is a type of client-side web storage that allows web applications to store data locally within the user’s browser. This web API enables developers to store key-value pairs in the browser’s memory without an expiration date. Developers often employ this tool to persist data across browser sessions and page refreshes. Local storage can be useful for storing user preferences (language, theme, etc.) or session data.  
 
-Storing sensitive user information to the browser's local storage is often discouraged between it can be easily accessed by malicious scripts. User information should always be stored on the server side where it benefits from added security measures. Nevertheless, it is always a good idea to encrypt any information that you store in the local storage especially if you suspect that it can be used for malicious attacks.
+Storing sensitive user information to the browser's local storage is often discouraged because it can be easily accessed by malicious scripts. User information should always be stored on the server side where it benefits from added security measures. Nevertheless, it is always a good idea to encrypt any information that you store in the local storage especially if you suspect that it can be used for malicious attacks.
 
 ## The `react-secure-storage` library
 
