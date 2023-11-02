@@ -6,6 +6,9 @@ nav_order: 7
 
 # Where to Store Data on the Client Side?
 
+![local-session-cookies](assets/img/local-session-cookies.png)
+_Image retrieved from [loginradius.com](https://www.loginradius.com/blog/engineering/guest-post/local-storage-vs-session-storage-vs-cookies/)_  
+
 Web applications often need to store user data to help manage sessions and retain information when navigation from one page to another, performing requests or reload a page. One of the main disadvantage of the HTTP protocol is the "stateless" nature of the relationship between the browser and server. In other words, the HTTP protocol does not require the server to retain information or status about each user for the duration of multiple requests. To get around this limitation, web developers tend to store session or user information on the client side using the following methods: cookies, local storage, and session storage. In this section of the learning module, we will compare these 3 methods in terms of characteristics and use cases.
 
 ## Local Storage

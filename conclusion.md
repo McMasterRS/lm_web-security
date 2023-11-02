@@ -24,5 +24,8 @@ We recommend the following resources if you want to learn more about Microsoft A
 - [The Official MUI Documentation](https://mui.com/material-ui/getting-started/overview/)
 - [react-secure-storage Documentation](https://www.npmjs.com/package/react-secure-storage)
 - [HTTP Headers Scanner](https://securityheaders.com/)
+- [Local Storage vs Cookies: Where to securely store data on the client-side?](https://javascript.plainenglish.io/local-storage-vs-cookies-where-to-securely-store-data-on-the-client-side-de37bf050ca5)
+- [Why Cookie is preferable compared to localStorage when it comes to authentication](https://levelup.gitconnected.com/why-cookie-is-preferable-compared-to-localstorage-when-it-comes-to-authentication-b43ac5610be6)
+- [Difference Between Local Storage, Session Storage And Cookies - GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-local-storage-session-storage-and-cookies/)
 
 The final version of this demo website is available on GitHub: [macid-authentication-example](https://github.com/klee-mcmaster/macid-authentication-example)
