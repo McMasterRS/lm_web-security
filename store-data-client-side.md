@@ -43,13 +43,13 @@ An HTTP cookie is a string, that like local and session storage is stored in the
 
 **Persistence:** Cookies come in two types:
 - **Session Cookies**: These cookies persist until the browser session ends, i.e., until the user closes their browser tab or window.
-- **Permanent Cookies**: These cookies expire at pre-defined date and time specified by the developer using the “Expires” attribute.
+- **Permanent Cookies**: These cookies expire at pre-defined date and time specified by the developer using the `Expires` attribute.
 
 **Size:** Cookies cannot store as much data as the local or session storage and are limited to 4 KB per domain.
 
 **Type of data:** Cookies also store information in *key: value* pairs (e.g., `key1=value1; key2=value2;` ). Notice that a cookie may contain multiple *key: value* pairs, so the developer may have to parse the string to retrieve a specific key-value pair.
 
 **Security:** Cookies are vulnerable to XSS and CSRF attacks, but they provide ways to mitigate such attacks:
-- **HttpOnly**: The `HttpOnly` cookie header prevents the cookie from being accessed using JavaScript/TypeScript. Note that cookies created on the client side cannot be `HttpOnly`, which means they will remain insecure and vulnerable to XSS attacks. The `HttpOnly` cookie header can help mitigate XSS attacks, but is not sufficient on its own and should be combined with other properties (like `SameSite`) to improve the security of the web application.
+- **HttpOnly**: The `HttpOnly` cookie header prevents the cookie from being accessed using JavaScript/TypeScript. Note that cookies created on the client side cannot be `HttpOnly`, which means they will remain insecure and vulnerable to XSS attacks. The `HttpOnly` cookie header can help mitigate XSS attacks, but is not sufficient on its own and should be combined with other properties (like `sameSite`) to improve the security of the web application.
 - **SameSite:** The `sameSite` cookie attribute specifies rules on whether/when cookies are sent with cross-site requests. The `sameSite` header should be set to `Strict` to limit the cookie to HTTP requests to the same site where it originated. Setting this property to `Lax` can make your website vulnerable to CSRF and XSS attacks since the cookie will also be sent if a request to the website originates from another site. You can also combine the `sameSite` cookie header with anti-CSRF tokens to further improve the resilience of your website against CSRF attacks.
-- **Secure:** When `secure` flag of a cookie is set to true, the cookie may only be transmitted using a secure connection (SSL/HTTPS). This measure prevents cookies from being observed by unauthorized parties due to the transmission of the cookies in plain text.
+- **Secure:** When the `secure` flag of a cookie is set to true, the cookie may only be transmitted using a secure connection (SSL/HTTPS). This measure prevents cookies from being observed by unauthorized parties due to the transmission of the cookies in plain text.
