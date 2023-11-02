@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Secure Local Storage
-nav_order: 7
+nav_order: 8
 ---
 
 # Securely Storing Data in Local Storage in a Next.js SPA
