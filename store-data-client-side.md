@@ -9,7 +9,7 @@ nav_order: 7
 ![local-session-cookies](assets/img/local-session-cookies.png)
 _Image retrieved from [loginradius.com](https://www.loginradius.com/blog/engineering/guest-post/local-storage-vs-session-storage-vs-cookies/)_  
 
-Web applications often need to store user data to help manage sessions and retain information when navigating from one page to another, performing requests or reloading a page. One of the main disadvantages of the HTTP protocol is the "stateless" nature of the relationship between the browser and server. In other words, the HTTP protocol does not require the server to retain information or status about each user for the duration of multiple requests. To get around this limitation, web developers tend to store session or user information on the client side using the following methods: cookies, local storage, and session storage. In this section of the learning module, we will compare these 3 methods in terms of characteristics and use cases.
+Web applications often need to store user data to help manage sessions and retain information when navigating from one page to another, performing requests or reloading a page. One of the main disadvantages of the HTTP protocol is the "stateless" nature of the relationship between the browser and server. In other words, the HTTP protocol does not require the server to retain information or status about each user for the duration of multiple requests. To get around this limitation, web developers tend to store session or user information on the client side using the following methods: local storage, session storage and cookies. In this section of the learning module, we will compare these 3 methods in terms of characteristics and use cases.
 
 ## Local Storage
 
@@ -28,12 +28,12 @@ JSON.stringify(object_to_be_stored)
 JSON.parse(string_value_from_local_storage)
 ```
 
-**Security:** Local storage is vulnerable to Cross-site scripting (XSS) attacks, but not to Cross-Site Request Forgery (CSRF) attacks. An XSS attack happens when an attacker gains access to the data stored in a website's `localStorage` by running malicious scripts. Data stored in the local storage is saved in plain text, which means that local storage is not secure by design. Local storage is only accessible within the same domain. The main intent of storing data in local storage is accessing it in JavaScript, so there is no property to prevent local storage from being accessed using scripts. As such, developers should refrain from storing sensitive or personal session or user information in local storage, particularly if it is not encrypted.
+**Security:** Local storage is vulnerable to Cross-Site Scripting (XSS) attacks, but not to Cross-Site Request Forgery (CSRF) attacks. An XSS attack happens when an attacker gains access to the data stored in a website's `localStorage` by running malicious scripts. Data stored in the local storage is saved in plain text, which means that local storage is not secure by design. Local storage is only accessible within the same domain. The main intent of storing data in local storage is accessing it in JavaScript, so there is no property to prevent local storage from being accessed using scripts. As such, developers should refrain from storing sensitive or personal session or user information in local storage, particularly if it is not encrypted.
 ## Session Storage
 
 Session storage is a similar mechanism to local storage and allows developers to store data in the browser in the same *key: value* pair format. Data stored in the session storage is also never transferred to the server. 
 
-**Persistence:** Unlike local storage, session storage persists only for the duration of the session i.e., it will  be deleted when the users closes their tab or browser. A new session is created each time a tab or window is opened. In other words, each tab/window that is opened with the same URL creates its own session storage instance. However, should the user duplicate a tab, then the session storage of the original tab will be copied to the duplicated tab. Closing a window/tab ends the session and clears all session storage objects.
+**Persistence:** Unlike local storage, session storage persists only for the duration of the session i.e., it will be deleted when the user closes their tab or browser. A new session is created each time a tab or window is opened. In other words, each tab/window that is opened with the same URL creates its own session storage instance. However, should the user duplicate a tab, then the session storage of the original tab will be copied to the duplicated tab. Closing a window/tab ends the session and clears all session storage objects.
 
 **Size:** Session storage also provides 5 MB of storage space per domain. 
 
